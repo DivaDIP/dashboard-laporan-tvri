@@ -24,6 +24,53 @@
 
     <div class="py-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         
+        <!-- Cards Statistik Quick-View -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Total Laporan -->
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-gray-500">Total Laporan Masuk</p>
+                    <h3 class="text-2xl font-bold text-gray-800 mt-1">{{ $totalReports }}</h3>
+                </div>
+                <div class="w-11 h-11 rounded-xl bg-blue-50 text-[#003366] flex items-center justify-center font-bold text-lg">
+                    📊
+                </div>
+            </div>
+
+            <!-- Laporan Selesai -->
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-gray-500">Laporan Selesai</p>
+                    <h3 class="text-2xl font-bold text-emerald-600 mt-1">{{ $statusSelesai }}</h3>
+                </div>
+                <div class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-lg">
+                    ✅
+                </div>
+            </div>
+
+            <!-- Dalam Proses -->
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-gray-500">Dalam Proses</p>
+                    <h3 class="text-2xl font-bold text-amber-500 mt-1">{{ $statusProses }}</h3>
+                </div>
+                <div class="w-11 h-11 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center font-bold text-lg">
+                    ⏳
+                </div>
+            </div>
+
+            <!-- Ada Kendala -->
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-gray-500">Ada Kendala</p>
+                    <h3 class="text-2xl font-bold text-red-600 mt-1">{{ $statusKendala }}</h3>
+                </div>
+                <div class="w-11 h-11 rounded-xl bg-red-50 text-red-600 flex items-center justify-center font-bold text-lg">
+                    ⚠️
+                </div>
+            </div>
+        </div>
+
         <!-- Header & Filter & Export Buttons -->
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col md:flex-row justify-between md:items-center gap-4">
             <div>

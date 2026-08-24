@@ -39,6 +39,13 @@ class ReportController extends Controller
 
     public function adminDashboard(Request $request)
     {
+        // Hitung total statistik (keseluruhan data)
+        $totalReports = Report::count();
+        $statusSelesai = Report::where('status', 'Selesai')->count();
+        $statusProses = Report::where('status', 'Dalam Proses')->count();
+        $statusKendala = Report::where('status', 'Ada Kendala')->count();
+
+        // Query data tabel dengan filter
         $query = Report::with('user')->latest();
 
         if ($request->filled('asal_teknisi')) {
@@ -49,9 +56,16 @@ class ReportController extends Controller
             $query->where('status', $request->status);
         }
 
-        $reports = $query->paginate(10);
+        // withQueryString() memastikan filter tidak hilang saat berpindah halaman pagination
+        $reports = $query->paginate(10)->withQueryString();
 
-        return view('admin.dashboard', compact('reports'));
+        return view('admin.dashboard', compact(
+            'reports',
+            'totalReports',
+            'statusSelesai',
+            'statusProses',
+            'statusKendala'
+        ));
     }
 
     public function destroy($id)
