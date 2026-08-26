@@ -6,10 +6,35 @@ use App\Exports\ReportsExport;
 use App\Models\Report;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ReportController extends Controller
 {
+    /**
+     * Menampilkan Riwayat Laporan Pribadi (Khusus User / Teknisi)
+     */
+    public function myReports(Request $request)
+    {
+        // Ambil data laporan HANYA milik user yang sedang login
+        $query = Report::where('user_id', Auth::id())->latest();
+
+        // Filter berdasarkan status jika ada
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        // Filter berdasarkan tanggal jika ada
+        if ($request->filled('tanggal')) {
+            $query->whereDate('created_at', $request->tanggal);
+        }
+
+        // Simpan query filter saat pagination
+        $reports = $query->paginate(10)->withQueryString();
+
+        return view('teknisi.index', compact('reports'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -26,7 +51,7 @@ class ReportController extends Controller
         }
 
         Report::create([
-            'user_id' => \Illuminate\Support\Facades\Auth::id(),
+            'user_id' => Auth::id(),
             'asal_teknisi' => $request->asal_teknisi,
             'lokasi' => $request->lokasi,
             'isi_laporan' => $request->isi_laporan,

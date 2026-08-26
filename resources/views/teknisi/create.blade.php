@@ -10,8 +10,13 @@
 
     <!-- Navbar -->
     <nav class="bg-[#003366] text-white px-6 py-4 flex justify-between items-center shadow-md">
-        <div class="flex items-center space-x-3">
+        <div class="flex items-center space-x-6">
             <span class="font-bold text-lg tracking-wide">Laporan Staf Lapangan Teknisi</span>
+            <!-- Menu Navigasi Tambahan -->
+            <div class="space-x-4 text-sm font-medium">
+                <a href="{{ route('dashboard') }}" class="text-white font-bold border-b-2 border-white pb-1">Form Input</a>
+                <a href="{{ route('reports.my') }}" class="text-blue-200 hover:text-white transition">Riwayat Saya</a>
+            </div>
         </div>
         <div class="flex items-center space-x-4">
             <span class="text-sm font-medium">{{ Auth::user()->name }}</span>
@@ -37,8 +42,8 @@
                 </div>
             @endif
 
-            <!-- Form -->
-            <form action="{{ route('reports.store') }}" method="POST" enctype="multipart/form-data" id="reportForm" class="p-6 space-y-5">
+            <!-- Form (Diubah action-nya ke report.store) -->
+            <form action="{{ route('report.store') }}" method="POST" enctype="multipart/form-data" id="reportForm" class="p-6 space-y-5">
                 @csrf
 
                 <!-- Asal Teknisi / Bidang -->
