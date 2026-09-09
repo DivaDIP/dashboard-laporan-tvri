@@ -11,7 +11,7 @@
     <!-- Navbar Standar -->
     <nav class="bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center shadow-sm">
         <div class="flex items-center space-x-3">
-            <span class="font-bold text-[#003366] text-lg">Dashboard Staf Teknisi</span>
+            <span class="font-bold text-[#003366] text-lg">Dashboard Staf Teknik Penyiaran & Produksi</span>
         </div>
         <div class="flex items-center space-x-4">
             <span class="text-sm font-semibold text-gray-700">{{ Auth::user()->name }}</span>

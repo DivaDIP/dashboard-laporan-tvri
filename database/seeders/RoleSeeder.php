@@ -16,16 +16,16 @@ class RoleSeeder extends Seeder
 
         // Buat 1 Akun Admin Default
         $admin = User::create([
-            'name' => 'Administrator',
-            'email' => 'admin@gmail.com',
+            'name' => 'Admin TVRI',
+            'email' => 'admin@tvri.com',
             'password' => bcrypt('password123'),
         ]);
         $admin->assignRole($adminRole);
 
         // Buat 1 Akun User Default
         $user = User::create([
-            'name' => 'User Biasa',
-            'email' => 'user@gmail.com',
+            'name' => 'Staf Teknisi',
+            'email' => 'staf@tvri.com',
             'password' => bcrypt('password123'),
         ]);
         $user->assignRole($userRole);
