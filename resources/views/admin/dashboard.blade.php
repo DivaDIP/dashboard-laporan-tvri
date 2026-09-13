@@ -11,10 +11,10 @@
     <!-- Navbar -->
     <nav class="bg-[#003366] text-white px-6 py-4 flex justify-between items-center shadow-md">
         <div class="flex items-center space-x-3">
-            <span class="font-bold text-lg tracking-wide">Panel Monitoring Admin Pokjawas</span>
+            <span class="font-bold text-lg tracking-wide">Monitoring Teknik Produksi & Penyiaran</span>
         </div>
         <div class="flex items-center space-x-4">
-            <span class="text-sm font-medium">{{ Auth::user()->name }} (Admin)</span>
+            <span class="text-sm font-medium">{{ Auth::user()->name }}</span>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit" class="text-xs bg-red-600 hover:bg-red-700 px-3 py-1.5 rounded-lg font-bold transition">Logout</button>
@@ -80,14 +80,6 @@
 
             <!-- Form Filter & Tombol Export -->
             <form method="GET" action="{{ route('admin.dashboard') }}" class="flex flex-wrap items-center gap-2">
-                <select name="asal_teknisi" class="text-xs border-gray-300 rounded-lg p-2 bg-gray-50 border focus:ring-[#003366] focus:border-[#003366]">
-                    <option value="">Semua Bidang</option>
-                    <option value="Teknisi Transmisi & Pemancar" {{ request('asal_teknisi') == 'Teknisi Transmisi & Pemancar' ? 'selected' : '' }}>Transmisi</option>
-                    <option value="Teknisi Studio & Produksi" {{ request('asal_teknisi') == 'Teknisi Studio & Produksi' ? 'selected' : '' }}>Studio</option>
-                    <option value="Teknisi IT & Jaringan" {{ request('asal_teknisi') == 'Teknisi IT & Jaringan' ? 'selected' : '' }}>IT & Jaringan</option>
-                    <option value="Teknisi Sarpras & Kelistrikan" {{ request('asal_teknisi') == 'Teknisi Sarpras & Kelistrikan' ? 'selected' : '' }}>Sarpras (ME)</option>
-                </select>
-
                 <select name="status" class="text-xs border-gray-300 rounded-lg p-2 bg-gray-50 border focus:ring-[#003366] focus:border-[#003366]">
                     <option value="">Semua Status</option>
                     <option value="Selesai" {{ request('status') == 'Selesai' ? 'selected' : '' }}>Selesai</option>
@@ -98,10 +90,10 @@
                 <button type="submit" class="bg-[#003366] text-white text-xs font-semibold px-4 py-2 rounded-lg hover:bg-blue-900 transition">Filter</button>
 
                 <!-- Tombol Export Excel & PDF (Otomatis Ikut Filter Aktif) -->
-                <a href="{{ route('admin.reports.export.excel', request()->all()) }}" class="bg-emerald-600 text-white text-xs font-semibold px-3 py-2 rounded-lg hover:bg-emerald-700 transition flex items-center gap-1">
+                {{-- <a href="{{ route('admin.reports.export.excel', request()->all()) }}" class="bg-emerald-600 text-white text-xs font-semibold px-3 py-2 rounded-lg hover:bg-emerald-700 transition flex items-center gap-1">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                     Export Excel
-                </a>
+                </a> --}}
                 <a href="{{ route('admin.reports.export.pdf', request()->all()) }}" class="bg-red-600 text-white text-xs font-semibold px-3 py-2 rounded-lg hover:bg-red-700 transition flex items-center gap-1">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
                     Export PDF

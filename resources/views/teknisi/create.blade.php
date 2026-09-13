@@ -11,7 +11,7 @@
     <!-- Navbar -->
     <nav class="bg-[#003366] text-white px-6 py-4 flex justify-between items-center shadow-md">
         <div class="flex items-center space-x-6">
-            <span class="font-bold text-lg tracking-wide">Laporan Staf Lapangan Teknisi</span>
+            <span class="font-bold text-lg tracking-wide">Laporan Staff Penyiaran & Produksi</span>
             <!-- Menu Navigasi Tambahan -->
             <div class="space-x-4 text-sm font-medium">
                 <a href="{{ route('dashboard') }}" class="text-white font-bold border-b-2 border-white pb-1">Form Input</a>
@@ -51,12 +51,39 @@
                     <label for="asal_teknisi" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Bidang / Subkelompok Teknisi <span class="text-red-500">*</span></label>
                     <select id="asal_teknisi" name="asal_teknisi" required class="w-full text-sm border-gray-300 rounded-xl p-3 bg-gray-50 border focus:ring-2 focus:ring-[#003366] focus:bg-white transition">
                         <option value="" disabled selected>-- Pilih Bidang Teknisi --</option>
-                        <option value="Teknisi Transmisi & Pemancar" {{ old('asal_teknisi') == 'Teknisi Transmisi & Pemancar' ? 'selected' : '' }}>Teknisi Transmisi & Pemancar</option>
-                        <option value="Teknisi Studio & Produksi" {{ old('asal_teknisi') == 'Teknisi Studio & Produksi' ? 'selected' : '' }}>Teknisi Studio & Produksi</option>
-                        <option value="Teknisi IT & Jaringan" {{ old('asal_teknisi') == 'Teknisi IT & Jaringan' ? 'selected' : '' }}>Teknisi IT & Jaringan</option>
-                        <option value="Teknisi Sarpras & Kelistrikan" {{ old('asal_teknisi') == 'Teknisi Sarpras & Kelistrikan' ? 'selected' : '' }}>Teknisi Sarpras & Kelistrikan (ME)</option>
+                        <option value="Switcher" {{ old('asal_teknisi') == 'Switcher' ? 'selected' : '' }}>Switcher</option>
+                        <option value="Juru Kamera Liputan" {{ old('asal_teknisi') == 'Juru Kamera Liputan' ? 'selected' : '' }}>Juru Kamera Liputan</option>
+                        <option value="Juru Kamera" {{ old('asal_teknisi') == 'Juru Kamera' ? 'selected' : '' }}>Juru Kamera</option>
+                        <option value="Playout MCR" {{ old('asal_teknisi') == 'Playout MCR' ? 'selected' : '' }}>Playout MCR</option>
+                        <option value="Playout" {{ old('asal_teknisi') == 'Playout' ? 'selected' : '' }}>Playout</option>
+                        <option value="Penata Cahaya" {{ old('asal_teknisi') == 'Penata Cahaya' ? 'selected' : '' }}>Penata Cahaya</option>
+                        <option value="Penata Suara" {{ old('asal_teknisi') == 'Penata Suara' ? 'selected' : '' }}>Penata Suara</option>
+                        <option value="Character Generator" {{ old('asal_teknisi') == 'Character Generator' ? 'selected' : '' }}>Character Generator</option>
+                        <option value="Teknisi IT" {{ old('asal_teknisi') == 'Teknisi IT' ? 'selected' : '' }}>Teknisi IT</option>
                     </select>
                     @error('asal_teknisi')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Jenis / Kategori Kegiatan -->
+                <div>
+                    <label for="kategori" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Jenis Kegiatan <span class="text-red-500">*</span></label>
+                    <select id="kategori" name="kategori" required class="w-full text-sm border-gray-300 rounded-xl p-3 bg-gray-50 border focus:ring-2 focus:ring-[#003366] focus:bg-white transition">
+                        <option value="" disabled selected>-- Pilih Jenis Kegiatan --</option>
+                        <option value="Pagi" {{ old('kategori') == 'Pagi' ? 'selected' : '' }}>Pagi</option>
+                        <option value="Dinas" {{ old('kategori') == 'Dinas' ? 'selected' : '' }}>Dinas</option>
+                    </select>
+                    @error('kategori')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Tanggal Kegiatan -->
+                <div>
+                    <label for="tanggal_kegiatan" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Tanggal Kegiatan <span class="text-red-500">*</span></label>
+                    <input type="date" id="tanggal_kegiatan" name="tanggal_kegiatan" value="{{ old('tanggal_kegiatan', date('Y-m-d')) }}" required class="w-full text-sm border-gray-300 rounded-xl p-3 bg-gray-50 border focus:ring-2 focus:ring-[#003366] focus:bg-white transition">
+                    @error('tanggal_kegiatan')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
                 </div>
@@ -82,13 +109,22 @@
                 <!-- Status Pekerjaan -->
                 <div>
                     <label for="status" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Status Hasil Pekerjaan <span class="text-red-500">*</span></label>
-                    <select id="status" name="status" required class="w-full text-sm border-gray-300 rounded-xl p-3 bg-gray-50 border focus:ring-2 focus:ring-[#003366] focus:bg-white transition">
+                    <select id="status" name="status" required onchange="toggleKendalaField()" class="w-full text-sm border-gray-300 rounded-xl p-3 bg-gray-50 border focus:ring-2 focus:ring-[#003366] focus:bg-white transition">
                         <option value="" disabled selected>-- Pilih Status --</option>
                         <option value="Selesai" {{ old('status') == 'Selesai' ? 'selected' : '' }}>Selesai (Normal / Berhasil)</option>
                         <option value="Dalam Proses" {{ old('status') == 'Dalam Proses' ? 'selected' : '' }}>Dalam Proses (Pengerjaan Lanjutan)</option>
                         <option value="Ada Kendala" {{ old('status') == 'Ada Kendala' ? 'selected' : '' }}>Ada Kendala (Butuh Tindak Lanjut / Sparepart)</option>
                     </select>
                     @error('status')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Deskripsi Kendala (Muncul Otomatis saat Status "Ada Kendala") -->
+                <div id="kendalaContainer" class="hidden">
+                    <label for="deskripsi_kendala" class="block text-xs font-bold text-red-700 uppercase tracking-wider mb-2">Deskripsi Kendala yang Dihadapi <span class="text-red-500">*</span></label>
+                    <textarea id="deskripsi_kendala" name="deskripsi_kendala" rows="3" placeholder="Rincikan kendala, alat rusak, atau sparepart yang dibutuhkan..." class="w-full text-sm border-red-200 rounded-xl p-3 bg-red-50/50 border focus:ring-2 focus:ring-red-500 focus:bg-white transition leading-relaxed">{{ old('deskripsi_kendala') }}</textarea>
+                    @error('deskripsi_kendala')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
                 </div>
@@ -129,6 +165,24 @@
 
     <!-- Script Preview & Validasi JavaScript -->
     <script>
+        function toggleKendalaField() {
+            const statusSelect = document.getElementById('status');
+            const kendalaContainer = document.getElementById('kendalaContainer');
+            const kendalaInput = document.getElementById('deskripsi_kendala');
+
+            if (statusSelect.value === 'Ada Kendala') {
+                kendalaContainer.classList.remove('hidden');
+                kendalaInput.setAttribute('required', 'required');
+            } else {
+                kendalaContainer.classList.add('hidden');
+                kendalaInput.removeAttribute('required');
+                kendalaInput.value = '';
+            }
+        }
+
+        // Cek status saat halaman dimuat (agar mendukung re-select dari nilai old)
+        document.addEventListener('DOMContentLoaded', toggleKendalaField);
+
         function handleImagePreview(event) {
             const fileInput = event.target;
             const file = fileInput.files[0];

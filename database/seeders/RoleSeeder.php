@@ -16,7 +16,7 @@ class RoleSeeder extends Seeder
 
         // Buat 1 Akun Admin Default
         $admin = User::create([
-            'name' => 'Admin TVRI',
+            'name' => 'Admin Teknisi',
             'email' => 'admin@tvri.com',
             'password' => bcrypt('password123'),
         ]);

@@ -13,6 +13,8 @@
         .status-selesai { color: green; font-weight: bold; }
         .status-proses { color: orange; font-weight: bold; }
         .status-kendala { color: red; font-weight: bold; }
+        .foto-laporan { max-width: 100px; max-height: 100px; object-fit: cover; }
+        .no-foto { color: #999; font-style: italic; font-size: 9px; }
     </style>
 </head>
 <body>
@@ -27,11 +29,12 @@
         <thead>
             <tr>
                 <th width="5%">No</th>
-                <th width="15%">Waktu</th>
+                <th width="12%">Waktu</th>
                 <th width="15%">Teknisi</th>
-                <th width="15%">Bidang & Lokasi</th>
+                <th width="15%">Lokasi</th>
                 <th>Isi Kegiatan</th>
-                <th width="12%">Status</th>
+                <th width="12%">Foto</th>
+                <th width="10%">Status</th>
             </tr>
         </thead>
         <tbody>
@@ -39,12 +42,28 @@
                 <tr>
                     <td style="text-align: center;">{{ $index + 1 }}</td>
                     <td>{{ $report->created_at->format('d/m/Y H:i') }}</td>
-                    <td><strong>{{ $report->user->name ?? 'Staf Teknisi' }}</strong></td>
-                    <td>
-                        <strong>{{ $report->asal_teknisi }}</strong><br>
-                        <small>{{ $report->lokasi }}</small>
-                    </td>
+                    <td><strong>{{ $report->asal_teknisi }}</strong></td>
+                    <td>{{ $report->lokasi }}</td>
                     <td>{{ $report->isi_laporan }}</td>
+                    <td style="text-align: center;">
+                        @php
+                            $fotoBase64 = null;
+                            if (!empty($report->foto)) {
+                                $fullPath = storage_path('app/public/' . $report->foto);
+                                if (file_exists($fullPath)) {
+                                    $type = pathinfo($fullPath, PATHINFO_EXTENSION);
+                                    $data = file_get_contents($fullPath);
+                                    $fotoBase64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+                                }
+                            }
+                        @endphp
+
+                        @if($fotoBase64)
+                            <img src="{{ $fotoBase64 }}" class="foto-laporan">
+                        @else
+                            <span class="no-foto">Tidak ada foto</span>
+                        @endif
+                    </td>
                     <td>
                         @if($report->status == 'Selesai')
                             <span class="status-selesai">Selesai</span>

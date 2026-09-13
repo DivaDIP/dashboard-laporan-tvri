@@ -53,7 +53,7 @@
                         <label for="email" class="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-1">E-mail Address</label>
                         <input id="email" type="email" name="email" :value="old('email')" required autofocus 
                             class="w-full border-none p-0 text-gray-900 focus:ring-0 text-base placeholder-gray-400 bg-transparent font-medium"
-                            placeholder="pokjawasaadmin@admincom">
+                            placeholder="contoh@admin.com">
                         <x-input-error :messages="$errors->get('email')" class="mt-2 text-xs" />
                     </div>
 
