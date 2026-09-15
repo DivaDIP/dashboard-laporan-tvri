@@ -16,33 +16,35 @@ class ReportController extends Controller
      */
     public function myReports(Request $request)
     {
-        // Ambil data laporan HANYA milik user yang sedang login
         $query = Report::where('user_id', Auth::id())->latest();
 
-        // Filter berdasarkan status jika ada
         if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
 
-        // Filter berdasarkan tanggal jika ada
         if ($request->filled('tanggal')) {
-            $query->whereDate('created_at', $request->tanggal);
+            $query->whereDate('tanggal_kegiatan', $request->tanggal);
         }
 
-        // Simpan query filter saat pagination
         $reports = $query->paginate(10)->withQueryString();
 
         return view('teknisi.index', compact('reports'));
     }
 
+    /**
+     * Menyimpan Laporan Baru dari Form Teknisi
+     */
     public function store(Request $request)
     {
         $request->validate([
-            'asal_teknisi' => 'required',
-            'lokasi' => 'required',
-            'isi_laporan' => 'required',
-            'status' => 'required',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'tanggal_kegiatan' => 'required|date',
+            'kategori'         => 'required|string',
+            'asal_teknisi'      => 'required|string',
+            'lokasi'            => 'required|string',
+            'isi_laporan'       => 'required|string',
+            'status'            => 'required|string',
+            'deskripsi_kendala' => 'nullable|string',
+            'foto'              => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         $fotoPath = null;
@@ -51,26 +53,30 @@ class ReportController extends Controller
         }
 
         Report::create([
-            'user_id' => Auth::id(),
-            'asal_teknisi' => $request->asal_teknisi,
-            'lokasi' => $request->lokasi,
-            'isi_laporan' => $request->isi_laporan,
-            'status' => $request->status,
-            'foto' => $fotoPath,
+            'user_id'          => Auth::id(),
+            'tanggal_kegiatan' => $request->tanggal_kegiatan,
+            'kategori'         => $request->kategori,
+            'asal_teknisi'     => $request->asal_teknisi,
+            'lokasi'           => $request->lokasi,
+            'isi_laporan'      => $request->isi_laporan,
+            'status'           => $request->status,
+            'deskripsi_kendala'=> $request->deskripsi_kendala,
+            'foto'             => $fotoPath,
         ]);
 
         return redirect()->back()->with('success', 'Laporan berhasil dikirim!');
     }
 
+    /**
+     * Menampilkan Dashboard Admin
+     */
     public function adminDashboard(Request $request)
     {
-        // Hitung total statistik (keseluruhan data)
-        $totalReports = Report::count();
+        $totalReports  = Report::count();
         $statusSelesai = Report::where('status', 'Selesai')->count();
-        $statusProses = Report::where('status', 'Dalam Proses')->count();
+        $statusProses  = Report::where('status', 'Dalam Proses')->count();
         $statusKendala = Report::where('status', 'Ada Kendala')->count();
 
-        // Query data tabel dengan filter
         $query = Report::with('user')->latest();
 
         if ($request->filled('asal_teknisi')) {
@@ -81,7 +87,6 @@ class ReportController extends Controller
             $query->where('status', $request->status);
         }
 
-        // withQueryString() memastikan filter tidak hilang saat berpindah halaman pagination
         $reports = $query->paginate(10)->withQueryString();
 
         return view('admin.dashboard', compact(

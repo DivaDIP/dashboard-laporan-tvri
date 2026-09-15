@@ -1,33 +1,38 @@
 <?php
 
-namespace Database\Seeders; // <--- WAJIB TAMBAHKAN BARIS INI
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class RoleSeeder extends Seeder
 {
     public function run(): void
     {
-        // Buat Role
-        $adminRole = Role::create(['name' => 'admin']);
-        $userRole  = Role::create(['name' => 'user']);
+        // Buat atau Ambil Role
+        $adminRole = Role::firstOrCreate(['name' => 'admin']);
+        $userRole  = Role::firstOrCreate(['name' => 'user']);
 
-        // Buat 1 Akun Admin Default
-        $admin = User::create([
-            'name' => 'Admin Teknisi',
-            'email' => 'admin@tvri.com',
-            'password' => bcrypt('password123'),
-        ]);
+        // Buat atau Update Akun Admin
+        $admin = User::updateOrCreate(
+            ['email' => 'admin@tvri.com'],
+            [
+                'name' => 'Admin Teknisi',
+                'password' => Hash::make('password123'),
+            ]
+        );
         $admin->assignRole($adminRole);
 
-        // Buat 1 Akun User Default
-        $user = User::create([
-            'name' => 'Staf Teknisi',
-            'email' => 'staf@tvri.com',
-            'password' => bcrypt('password123'),
-        ]);
-        $user->assignRole($userRole);
+        // Buat atau Update Akun Staf
+        $staf = User::updateOrCreate(
+            ['email' => 'staf@tvri.com'],
+            [
+                'name' => 'Staf Teknisi',
+                'password' => Hash::make('password123'),
+            ]
+        );
+        $staf->assignRole($userRole);
     }
 }

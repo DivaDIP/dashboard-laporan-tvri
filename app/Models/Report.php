@@ -11,11 +11,18 @@ class Report extends Model
 
     protected $fillable = [
         'user_id',
-        'lokasi',
+        'tanggal_kegiatan',
+        'kategori',
         'asal_teknisi',
+        'lokasi',
         'isi_laporan',
         'status',
+        'deskripsi_kendala',
         'foto',
+    ];
+
+    protected $casts = [
+        'tanggal_kegiatan' => 'date',
     ];
 
     public function user()

@@ -2,50 +2,75 @@
 <html>
 <head>
     <title>Rekap Laporan Teknisi TVRI Bengkulu</title>
-    <style>
-        body { font-family: sans-serif; font-size: 11px; color: #333; }
-        .header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #003366; padding-bottom: 10px; }
-        .header h2 { margin: 0; color: #003366; }
-        .header p { margin: 2px 0; font-size: 10px; color: #666; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { border: 1px solid #ccc; padding: 6px; text-align: left; vertical-align: top; }
-        th { background-color: #003366; color: #fff; text-transform: uppercase; font-size: 10px; }
-        .status-selesai { color: green; font-weight: bold; }
-        .status-proses { color: orange; font-weight: bold; }
-        .status-kendala { color: red; font-weight: bold; }
-        .foto-laporan { max-width: 100px; max-height: 100px; object-fit: cover; }
-        .no-foto { color: #999; font-style: italic; font-size: 9px; }
-    </style>
+    <!-- Memanggil file CSS eksternal via absolute path system -->
+    <link rel="stylesheet" href="{{ resource_path('css/report.css') }}">
 </head>
 <body>
 
+    <!-- ========================================== -->
+    <!-- SECTION: HEADER DOKUMEN CETAK / PDF -->
+    <!-- ========================================== -->
     <div class="header">
         <h2>REKAPITULASI LAPORAN TEKNISI TVRI BENGKULU</h2>
         <p>Laporan Monitoring Pengerjaan Lapangan Pokjawas</p>
         <p>Dicetak pada: {{ date('d F Y, H:i') }} WIB</p>
     </div>
 
+    <!-- ========================================== -->
+    <!-- SECTION: TABEL REKAPITULASI LAPORAN -->
+    <!-- ========================================== -->
     <table>
         <thead>
             <tr>
-                <th width="5%">No</th>
-                <th width="12%">Waktu</th>
-                <th width="15%">Teknisi</th>
-                <th width="15%">Lokasi</th>
-                <th>Isi Kegiatan</th>
-                <th width="12%">Foto</th>
-                <th width="10%">Status</th>
+                <th width="4%" class="text-center">No</th>
+                <th width="12%">Tanggal & Waktu</th>
+                <th width="9%" class="text-center">Kategori</th>
+                <th width="12%">Teknisi</th>
+                <th width="8%">Lokasi</th>
+                <th width="20%">Isi Kegiatan</th>
+                <th width="14%">Detail Kendala</th>
+                <th width="10%" class="text-center">Foto</th>
+                <th width="8%" class="text-center">Status</th>
             </tr>
         </thead>
         <tbody>
             @foreach($reports as $index => $report)
                 <tr>
-                    <td style="text-align: center;">{{ $index + 1 }}</td>
-                    <td>{{ $report->created_at->format('d/m/Y H:i') }}</td>
+                    <!-- KOLOM: NOMOR URUT -->
+                    <td class="text-center">{{ $index + 1 }}</td>
+
+                    <!-- KOLOM: TANGGAL & WAKTU SUBMIT -->
+                    <td>
+                        <strong>{{ $report->tanggal_kegiatan ? $report->tanggal_kegiatan->format('d/m/Y') : $report->created_at->format('d/m/Y') }}</strong>
+                        <br>
+                        <small style="color: #64748b; font-size: 7.5px;">{{ $report->created_at->format('H:i') }} WIB</small>
+                    </td>
+
+                    <!-- KOLOM: BADGE KATEGORI -->
+                    <td class="text-center">
+                        <span class="badge-kategori">{{ $report->kategori ?? '-' }}</span>
+                    </td>
+
+                    <!-- KOLOM: TEKNISI / PELAPOR -->
                     <td><strong>{{ $report->asal_teknisi }}</strong></td>
+
+                    <!-- KOLOM: LOKASI PENGERJAAN -->
                     <td>{{ $report->lokasi }}</td>
+
+                    <!-- KOLOM: ISI KEGIATAN LAPORAN -->
                     <td>{{ $report->isi_laporan }}</td>
-                    <td style="text-align: center;">
+
+                    <!-- KOLOM: DETAIL KENDALA -->
+                    <td>
+                        @if(!empty($report->deskripsi_kendala))
+                            <span class="text-kendala">{{ $report->deskripsi_kendala }}</span>
+                        @else
+                            <div class="text-empty">-</div>
+                        @endif
+                    </td>
+
+                    <!-- KOLOM: PRATINJAU FOTO BUKTI (BASE64 ENCODING) -->
+                    <td class="text-center">
                         @php
                             $fotoBase64 = null;
                             if (!empty($report->foto)) {
@@ -59,18 +84,22 @@
                         @endphp
 
                         @if($fotoBase64)
-                            <img src="{{ $fotoBase64 }}" class="foto-laporan">
+                            <div class="foto-container">
+                                <img src="{{ $fotoBase64 }}" class="foto-laporan">
+                            </div>
                         @else
-                            <span class="no-foto">Tidak ada foto</span>
+                            <span class="no-foto">Tidak ada</span>
                         @endif
                     </td>
-                    <td>
+
+                    <!-- KOLOM: BADGE STATUS LAPORAN -->
+                    <td class="text-center">
                         @if($report->status == 'Selesai')
-                            <span class="status-selesai">Selesai</span>
+                            <span class="status-badge status-selesai">Selesai</span>
                         @elseif($report->status == 'Dalam Proses')
-                            <span class="status-proses">Dalam Proses</span>
+                            <span class="status-badge status-proses">Proses</span>
                         @else
-                            <span class="status-kendala">Ada Kendala</span>
+                            <span class="status-badge status-kendala">Kendala</span>
                         @endif
                     </td>
                 </tr>

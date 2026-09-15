@@ -70,7 +70,7 @@
                 <div>
                     <label for="kategori" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Jenis Kegiatan <span class="text-red-500">*</span></label>
                     <select id="kategori" name="kategori" required class="w-full text-sm border-gray-300 rounded-xl p-3 bg-gray-50 border focus:ring-2 focus:ring-[#003366] focus:bg-white transition">
-                        <option value="" disabled selected>-- Pilih Jenis Kegiatan --</option>
+                        <option value="" disabled selected>-- Pilih Waktu Kegiatan --</option>
                         <option value="Pagi" {{ old('kategori') == 'Pagi' ? 'selected' : '' }}>Pagi</option>
                         <option value="Dinas" {{ old('kategori') == 'Dinas' ? 'selected' : '' }}>Dinas</option>
                     </select>

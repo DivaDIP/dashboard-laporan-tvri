@@ -1,0 +1,91 @@
+body { 
+    font-family: sans-serif; 
+    font-size: 10px; 
+    color: #333; 
+}
+
+.header { 
+    text-align: center; 
+    margin-bottom: 15px; 
+    border-bottom: 2px solid #003366; 
+    padding-bottom: 8px; 
+}
+
+.header h2 { 
+    margin: 0; 
+    color: #003366; 
+    font-size: 16px; 
+}
+
+.header p { 
+    margin: 2px 0; 
+    font-size: 9px; 
+    color: #666; 
+}
+
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin-top: 10px; 
+}
+
+th, td { 
+    border: 1px solid #ccc; 
+    padding: 6px; 
+    text-align: center; /* Mengubah rata teks tabel menjadi di tengah */
+    vertical-align: middle; /* Menyelaraskan teks secara vertikal ke tengah */
+}
+
+th { 
+    background-color: #003366; 
+    color: #fff; 
+    text-transform: uppercase; 
+    font-size: 9px; 
+}
+
+.status-selesai { 
+    color: green; 
+    font-weight: bold; 
+}
+
+.status-proses { 
+    color: orange; 
+    font-weight: bold; 
+}
+
+.status-kendala { 
+    color: red; 
+    font-weight: bold; 
+}
+
+.foto-laporan { 
+    max-width: 85px; 
+    max-height: 85px; 
+    object-fit: cover; 
+}
+
+.no-foto { 
+    color: #999; 
+    font-style: italic; 
+    font-size: 8.5px; 
+}
+
+/* Style Teks Kendala & Kategori */
+.text-kendala {
+    color: #b91c1c;
+    font-weight: 500;
+}
+
+.text-empty {
+    color: #9ca3af;
+    text-align: center;
+}
+
+.badge-kategori {
+    background-color: #e2e8f0;
+    color: #334155;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 8.5px;
+    font-weight: bold;
+}
