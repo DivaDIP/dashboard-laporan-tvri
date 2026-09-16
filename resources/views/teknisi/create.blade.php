@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Laporan Kegiatan Teknisi - TVRI Bengkulu</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/svg+xml" href="{{ asset('logo-tvri.svg') }}">
 </head>
 <body class="bg-gray-100 font-sans antialiased text-gray-900 min-h-screen">
 
@@ -71,8 +72,8 @@
                     <label for="kategori" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Jenis Kegiatan <span class="text-red-500">*</span></label>
                     <select id="kategori" name="kategori" required class="w-full text-sm border-gray-300 rounded-xl p-3 bg-gray-50 border focus:ring-2 focus:ring-[#003366] focus:bg-white transition">
                         <option value="" disabled selected>-- Pilih Waktu Kegiatan --</option>
-                        <option value="Pagi" {{ old('kategori') == 'Pagi' ? 'selected' : '' }}>Pagi</option>
-                        <option value="Dinas" {{ old('kategori') == 'Dinas' ? 'selected' : '' }}>Dinas</option>
+                        <option value="Pagi" {{ old('kategori') == 'Pagi' ? 'selected' : '' }}>08:00 - 16:00</option>
+                        <option value="Dinas" {{ old('kategori') == 'Dinas' ? 'selected' : '' }}>10:00 - 18:00</option>
                     </select>
                     @error('kategori')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>

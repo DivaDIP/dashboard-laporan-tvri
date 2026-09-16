@@ -13,7 +13,7 @@
 
             <!-- Header Welcome -->
             <div class="relative z-30 text-center mt-4 md:mt-8">
-                <h3 class="text-2xl md:text-3xl font-bold tracking-wide">Welcome to</h3>
+                <h3 class="text-2xl md:text-3xl font-bold tracking-wide">Selamat Datang</h3>
             </div>
 
             <!-- Logo & Title Center -->
@@ -39,7 +39,7 @@
         <div class="w-full md:w-1/2 bg-white p-8 md:p-16 flex flex-col justify-center min-h-[500px] md:min-h-screen z-10">
             <div class="max-w-md w-full mx-auto">
                 <div class="mb-10">
-                    <h2 class="text-3xl font-bold text-gray-900 tracking-tight">Sign in to your account</h2>
+                    <h2 class="text-3xl font-bold text-gray-900 tracking-tight">Masuk ke Akun Anda</h2>
                     <p class="text-sm text-gray-500 mt-2">Silakan masukkan kredensial akun Anda untuk mengakses sistem.</p>
                 </div>
 
@@ -51,7 +51,7 @@
                     <!-- Email Input -->
                     <div class="relative border-b-2 border-gray-200 focus-within:border-[#003366] transition-colors py-2">
                         <label for="email" class="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-1">E-mail Address</label>
-                        <input id="email" type="email" name="email" :value="old('email')" required autofocus 
+                        <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus 
                             class="w-full border-none p-0 text-gray-900 focus:ring-0 text-base placeholder-gray-400 bg-transparent font-medium"
                             placeholder="contoh@admin.com">
                         <x-input-error :messages="$errors->get('email')" class="mt-2 text-xs" />
@@ -66,18 +66,18 @@
                         <x-input-error :messages="$errors->get('password')" class="mt-2 text-xs" />
                     </div>
 
-                    <!-- Remember & Forgot -->
+                    {{-- <!-- Remember & Forgot -->
                     <div class="flex items-center justify-between text-xs text-gray-500 pt-2">
                         <label for="remember_me" class="inline-flex items-center cursor-pointer">
                             <input id="remember_me" type="checkbox" name="remember" class="rounded border-gray-300 text-[#003366] shadow-sm focus:ring-[#003366]">
-                            <span class="ms-2 font-medium text-gray-600">Remember me</span>
+                            <span class="ms-2 font-medium text-gray-600">Ingatkan Saya</span>
                         </label>
                         @if (Route::has('password.request'))
                             <a class="hover:underline font-semibold text-[#003366]" href="{{ route('password.request') }}">
-                                Forgot Password?
+                                Lupa Password?
                             </a>
                         @endif
-                    </div>
+                    </div> --}}
 
                     <!-- Submit Button -->
                     <div class="pt-6">

@@ -13,6 +13,9 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        
+        {{-- icon --}}
+        <link rel="icon" type="image/svg+xml" href="{{ asset('logo-tvri.svg') }}">
     </head>
     <body class="font-sans antialiased bg-gray-50">
         <div class="min-h-screen bg-gray-50">

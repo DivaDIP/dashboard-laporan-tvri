@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Staf Teknisi TVRI</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/svg+xml" href="{{ asset('logo-tvri.svg') }}">
 </head>
 <body class="bg-gray-100 font-sans antialiased">
 
