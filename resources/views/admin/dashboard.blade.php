@@ -31,9 +31,9 @@
     <div class="py-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         
         <!-- ========================================== -->
-        <!-- SECTION: STATISTIK / QUICK-VIEW CARDS -->
+        <!-- SECTION: STATISTIK / QUICK-VIEW CARDS (MELEBAR PENUH) -->
         <!-- ========================================== -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full">
             <!-- CARD: TOTAL LAPORAN -->
             <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
                 <div>
@@ -53,17 +53,6 @@
                 </div>
                 <div class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-lg">
                     ✅
-                </div>
-            </div>
-
-            <!-- CARD: DALAM PROSES -->
-            <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
-                <div>
-                    <p class="text-xs font-medium text-gray-500">Dalam Proses</p>
-                    <h3 class="text-2xl font-bold text-amber-500 mt-1">{{ $statusProses }}</h3>
-                </div>
-                <div class="w-11 h-11 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center font-bold text-lg">
-                    ⏳
                 </div>
             </div>
 
@@ -94,7 +83,6 @@
                 <select name="status" class="text-xs border-gray-300 rounded-lg p-2 bg-gray-50 border focus:ring-[#003366] focus:border-[#003366]">
                     <option value="">Semua Status</option>
                     <option value="Selesai" {{ request('status') == 'Selesai' ? 'selected' : '' }}>Selesai</option>
-                    <option value="Dalam Proses" {{ request('status') == 'Dalam Proses' ? 'selected' : '' }}>Dalam Proses</option>
                     <option value="Ada Kendala" {{ request('status') == 'Ada Kendala' ? 'selected' : '' }}>Ada Kendala</option>
                 </select>
 
@@ -164,7 +152,7 @@
                                 @endif
                             </td>
 
-                            <!-- KOLOM: NAMA TEKNISI (DIAMBIL DARI $report->nama_teknisi) -->
+                            <!-- KOLOM: NAMA TEKNISI -->
                             <td class="p-4 font-semibold text-gray-800 whitespace-nowrap">
                                 {{ $report->nama_teknisi ?? 'Staf Teknisi' }}
                             </td>
@@ -184,8 +172,6 @@
                             <td class="p-4 whitespace-nowrap">
                                 @if($report->status == 'Selesai')
                                     <span class="bg-green-100 text-green-700 text-[11px] font-bold px-2.5 py-1 rounded-full">Selesai</span>
-                                @elseif($report->status == 'Dalam Proses')
-                                    <span class="bg-yellow-100 text-yellow-700 text-[11px] font-bold px-2.5 py-1 rounded-full">Dalam Proses</span>
                                 @else
                                     <span class="bg-red-100 text-red-700 text-[11px] font-bold px-2.5 py-1 rounded-full">Ada Kendala</span>
                                 @endif
@@ -193,7 +179,6 @@
 
                             <!-- KOLOM: AKSI (DETAIL & HAPUS) -->
                             <td class="p-4 text-center whitespace-nowrap space-x-2">
-                                <!-- BUTTON: DETAIL LAPORAN -->
                                 <button type="button" onclick="openReportModal({{ $report->id }})" 
                                     class="text-xs text-blue-600 hover:text-blue-800 font-bold hover:underline">
                                     Detail
@@ -202,7 +187,6 @@
                                 <form action="{{ route('admin.report.destroy', $report->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus laporan ini?')" class="inline">
                                     @csrf
                                     @method('DELETE')
-                                    <!-- BUTTON: HAPUS LAPORAN -->
                                     <button type="submit" class="text-xs text-red-600 hover:text-red-800 font-bold hover:underline">Hapus</button>
                                 </form>
                             </td>
@@ -235,7 +219,6 @@
                     <h3 class="text-lg font-bold">Detail Laporan Teknisi</h3>
                     <p class="text-xs text-blue-100 mt-0.5">Monitoring Kegiatan Lapangan</p>
                 </div>
-                <!-- BUTTON: CLOSE MODAL (SILANG) -->
                 <button type="button" onclick="closeReportModal()" class="text-white hover:text-gray-300 text-2xl font-bold leading-none">&times;</button>
             </div>
 
@@ -277,7 +260,6 @@
                 <div id="modal_foto_container">
                     <span class="block text-xs text-gray-400 font-medium mb-2">Foto Bukti Lapangan</span>
                     <div class="bg-gray-50 p-3 rounded-xl border border-gray-100 inline-block">
-                        <!-- LINK/BUTTON: PRATINJAU GAMBAR PENUH -->
                         <a id="modal_foto_link" href="#" target="_blank" class="block group">
                             <img id="modal_foto" src="" alt="Foto Bukti" class="max-h-60 w-auto rounded-lg shadow-sm group-hover:opacity-90 transition">
                             <span class="text-[11px] text-blue-600 font-semibold mt-2 text-center block group-hover:underline">Klik untuk membuka gambar penuh ↗</span>
@@ -285,69 +267,12 @@
                     </div>
                 </div>
             </div>
-
-            <!-- MODAL FOOTER -->
-            <div class="bg-gray-50 px-6 py-4 border-t border-gray-100 flex justify-end">
-                <!-- BUTTON: TUTUP MODAL -->
-                <button type="button" onclick="closeReportModal()" class="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-5 rounded-xl text-xs transition">
-                    Tutup
-                </button>
-            </div>
         </div>
     </div>
 
     <!-- ========================================== -->
     <!-- SECTION: JAVASCRIPT LOGIC (MODAL) -->
     <!-- ========================================== -->
-    <script>
-        function openReportModal(reportId) {
-            const modal = document.getElementById('reportDetailModal');
-            const tableRow = document.getElementById('report-row-' + reportId);
-            const data = JSON.parse(tableRow.getAttribute('data-report'));
-
-            document.getElementById('modal_tanggal').innerText = data.formatted_date;
-            document.getElementById('modal_teknisi').innerText = data.user_name;
-            document.getElementById('modal_bidang').innerText = data.asal_teknisi;
-            document.getElementById('modal_lokasi').innerText = data.lokasi;
-            document.getElementById('modal_isi').innerText = data.isi_laporan;
-
-            const kendalaContainer = document.getElementById('modal_kendala_container');
-            const kendalaText = document.getElementById('modal_kendala');
-
-            if (data.status === 'Ada Kendala' || data.deskripsi_kendala) {
-                kendalaText.innerText = data.deskripsi_kendala || 'Tidak ada catatan tambahan kendala.';
-                kendalaContainer.classList.remove('hidden');
-            } else {
-                kendalaContainer.classList.add('hidden');
-            }
-
-            const photoEl = document.getElementById('modal_foto');
-            const photoLinkEl = document.getElementById('modal_foto_link');
-            const photoContainer = document.getElementById('modal_foto_container');
-
-            if (data.foto) {
-                photoEl.src = '/storage/' + data.foto;
-                photoLinkEl.href = '/storage/' + data.foto;
-                photoContainer.classList.remove('hidden');
-            } else {
-                photoContainer.classList.add('hidden');
-            }
-
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeReportModal() {
-            const modal = document.getElementById('reportDetailModal');
-            modal.classList.add('hidden');
-            document.body.style.overflow = '';
-        }
-
-        document.getElementById('reportDetailModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeReportModal();
-            }
-        });
-    </script>
+    <script src="{{ asset('js/report-modal.js') }}"></script>
 </body>
 </html>
