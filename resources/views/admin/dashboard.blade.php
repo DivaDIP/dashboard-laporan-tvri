@@ -146,7 +146,7 @@
                                 'formatted_date' => $report->tanggal_kegiatan 
                                     ? \Carbon\Carbon::parse($report->tanggal_kegiatan)->format('d M Y') . ', ' . $report->created_at->format('H:i') . ' WIB'
                                     : $report->created_at->format('d M Y, H:i') . ' WIB',
-                                'user_name' => $report->user->name ?? 'Staf Teknisi',
+                                'user_name' => $report->nama_teknisi ?? 'Staf Teknisi',
                                 'asal_teknisi' => $report->asal_teknisi,
                                 'lokasi' => $report->lokasi,
                                 'isi_laporan' => $report->isi_laporan,
@@ -164,9 +164,9 @@
                                 @endif
                             </td>
 
-                            <!-- KOLOM: NAMA TEKNISI -->
+                            <!-- KOLOM: NAMA TEKNISI (DIAMBIL DARI $report->nama_teknisi) -->
                             <td class="p-4 font-semibold text-gray-800 whitespace-nowrap">
-                                {{ $report->user->name ?? 'Staf Teknisi' }}
+                                {{ $report->nama_teknisi ?? 'Staf Teknisi' }}
                             </td>
                             
                             <!-- KOLOM: BIDANG & LOKASI -->

@@ -38,6 +38,7 @@ class ReportController extends Controller
     {
         $request->validate([
             'tanggal_kegiatan' => 'required|date',
+            'nama_teknisi'      => 'required|string|max:255',
             'kategori'         => 'required|string',
             'asal_teknisi'      => 'required|string',
             'lokasi'            => 'required|string',
@@ -55,6 +56,7 @@ class ReportController extends Controller
         Report::create([
             'user_id'          => Auth::id(),
             'tanggal_kegiatan' => $request->tanggal_kegiatan,
+            'nama_teknisi'      => $request->nama_teknisi,
             'kategori'         => $request->kategori,
             'asal_teknisi'     => $request->asal_teknisi,
             'lokasi'           => $request->lokasi,

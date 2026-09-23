@@ -72,8 +72,9 @@ th {
 
 /* Style Teks Kendala & Kategori */
 .text-kendala {
-    color: #b91c1c;
-    font-weight: 500;
+    color: #333;
+    font-size: 9px;
+    font-weight: bold;
 }
 
 .text-empty {

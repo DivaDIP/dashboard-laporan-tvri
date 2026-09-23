@@ -43,9 +43,18 @@
                 </div>
             @endif
 
-            <!-- Form (Diubah action-nya ke report.store) -->
+            <!-- Form -->
             <form action="{{ route('report.store') }}" method="POST" enctype="multipart/form-data" id="reportForm" class="p-6 space-y-5">
                 @csrf
+
+                <!-- Input Nama Lengkap / Staf (Dikosongkan agar diisi manual) -->
+                <div>
+                    <label for="nama_teknisi" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Nama Teknisi <span class="text-red-500">*</span></label>
+                    <input type="text" id="nama_teknisi" name="nama_teknisi" value="{{ old('nama_teknisi') }}" required placeholder="Contoh: Budi Santoso, S.Kom" class="w-full text-sm border-gray-300 rounded-xl p-3 bg-gray-50 border focus:ring-2 focus:ring-[#003366] focus:bg-white transition">
+                    @error('nama_teknisi')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
 
                 <!-- Asal Teknisi / Bidang -->
                 <div>
