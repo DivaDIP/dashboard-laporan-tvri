@@ -9,45 +9,101 @@
 </head>
 <body class="bg-gray-100 font-sans antialiased text-gray-900 min-h-screen">
 
-    <!-- Navbar -->
-    <nav class="bg-[#003366] text-white px-6 py-4 flex justify-between items-center shadow-md">
-        <div class="flex items-center space-x-6">
-            <span class="font-bold text-lg tracking-wide">Laporan Staff Penyiaran & Produksi</span>
-            <!-- Menu Navigasi Tambahan -->
-            <div class="space-x-4 text-sm font-medium">
-                <a href="{{ route('dashboard') }}" class="text-white font-bold border-b-2 border-white pb-1">Form Input</a>
-                <a href="{{ route('reports.my') }}" class="text-blue-200 hover:text-white transition">Riwayat Saya</a>
+    <!-- Navbar Utama -->
+    <nav class="bg-[#003366] text-white px-4 sm:px-6 py-4 shadow-md relative z-40">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            
+            <!-- Logo / Judul Kiri -->
+            <span class="font-bold text-sm sm:text-base md:text-lg tracking-wide truncate">Laporan Staff Penyiaran</span>
+            
+            <!-- Tombol Hamburger (Hanya tampil di Mobile) -->
+            <button id="menu-btn" class="md:hidden text-white focus:outline-none p-1">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+
+            <!-- Menu Desktop (Tampil normal di layar besar) -->
+            <div class="hidden md:flex items-center space-x-6">
+                <div class="flex items-center space-x-4 text-sm font-medium">
+                    <a href="{{ route('dashboard') }}" class="text-white font-bold border-b-2 border-white pb-1">Form Input</a>
+                    <a href="{{ route('reports.my') }}" class="text-blue-200 hover:text-white transition">Riwayat Saya</a>
+                </div>
+                <div class="flex items-center space-x-4 border-l border-blue-800 pl-6">
+                    <span class="text-sm font-medium">{{ Auth::user()->name }}</span>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="text-xs bg-red-600 hover:bg-red-700 px-3 py-1.5 rounded-lg font-bold transition">Logout</button>
+                    </form>
+                </div>
             </div>
-        </div>
-        <div class="flex items-center space-x-4">
-            <span class="text-sm font-medium">{{ Auth::user()->name }}</span>
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="text-xs bg-red-600 hover:bg-red-700 px-3 py-1.5 rounded-lg font-bold transition">Logout</button>
-            </form>
+
         </div>
     </nav>
 
-    <div class="py-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Overlay Gelap di Belakang Sidebar -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-50 hidden transition-opacity opacity-0"></div>
+
+    <!-- Panel Sidebar Mobile (Geser dari Samping) -->
+    <div id="mobile-sidebar" class="fixed top-0 left-0 bottom-0 w-4/5 max-w-xs bg-white text-gray-900 z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col justify-between shadow-2xl">
+        
+        <!-- Bagian Atas Sidebar -->
+        <div>
+            <!-- Header Sidebar (Tombol Close & Judul/Logo) -->
+            <div class="p-5 flex justify-between items-center border-b border-gray-100">
+                <span class="font-bold text-sm text-[#003366] tracking-wide">Menu Navigasi</span>
+                <button id="close-btn" class="text-gray-500 hover:text-gray-800 text-2xl font-bold leading-none p-1 focus:outline-none">&times;</button>
+            </div>
+
+            <!-- Daftar Link Menu -->
+            <div class="flex flex-col py-2">
+                <a href="{{ route('dashboard') }}" class="px-6 py-3.5 text-sm font-bold text-[#003366] bg-blue-50/50 border-l-4 border-[#003366]">Form Input</a>
+                <a href="{{ route('reports.my') }}" class="px-6 py-3.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition">Riwayat Saya</a>
+            </div>
+        </div>
+
+        <!-- Bagian Bawah Sidebar (Info User & Logout) -->
+        <div class="p-5 border-t border-gray-100 bg-gray-50 space-y-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-9 h-9 rounded-full bg-[#003366] text-white flex items-center justify-center font-bold text-xs">
+                    {{ substr(Auth::user()->name, 0, 2) }}
+                </div>
+                <div class="overflow-hidden">
+                    <span class="block text-xs font-bold text-gray-800 truncate">{{ Auth::user()->name }}</span>
+                    <span class="block text-[11px] text-gray-400">Staf Teknisi</span>
+                </div>
+            </div>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white text-xs font-bold py-2.5 px-4 rounded-xl transition shadow-sm">
+                    Logout
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Container Utama Form -->
+    <div class="py-6 sm:py-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            
             <!-- Header Form -->
-            <div class="bg-[#003366] p-6 text-white">
-                <h2 class="text-xl font-bold">Input Laporan Kegiatan Lapangan</h2>
+            <div class="bg-[#003366] p-5 sm:p-6 text-white">
+                <h2 class="text-lg sm:text-xl font-bold">Input Laporan Kegiatan Lapangan</h2>
                 <p class="text-xs text-blue-100 mt-1">Silakan isi form di bawah ini dengan lengkap dan jujur.</p>
             </div>
 
             <!-- Pesan Sukses -->
             @if(session('success'))
-                <div class="m-6 p-4 bg-green-50 border-l-4 border-green-500 text-green-700 text-sm rounded-r-lg shadow-sm">
+                <div class="m-4 sm:m-6 p-4 bg-green-50 border-l-4 border-green-500 text-green-700 text-sm rounded-r-lg shadow-sm">
                     {{ session('success') }}
                 </div>
             @endif
 
             <!-- Form -->
-            <form action="{{ route('report.store') }}" method="POST" enctype="multipart/form-data" id="reportForm" class="p-6 space-y-5">
+            <form action="{{ route('report.store') }}" method="POST" enctype="multipart/form-data" id="reportForm" class="p-4 sm:p-6 space-y-5">
                 @csrf
 
-                <!-- Input Nama Lengkap / Staf (Dikosongkan agar diisi manual) -->
+                <!-- Input Nama Lengkap / Staf -->
                 <div>
                     <label for="nama_teknisi" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Nama Teknisi <span class="text-red-500">*</span></label>
                     <input type="text" id="nama_teknisi" name="nama_teknisi" value="{{ old('nama_teknisi') }}" required placeholder="Contoh: Budi Santoso, S.Kom" class="w-full text-sm border-gray-300 rounded-xl p-3 bg-gray-50 border focus:ring-2 focus:ring-[#003366] focus:bg-white transition">
@@ -129,7 +185,7 @@
                     @enderror
                 </div>
 
-                <!-- Deskripsi Kendala (Selalu Muncul Permanen) -->
+                <!-- Deskripsi Kendala -->
                 <div>
                     <label for="deskripsi_kendala" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Deskripsi Kendala yang Dihadapi (Opsional)</label>
                     <textarea id="deskripsi_kendala" name="deskripsi_kendala" rows="3" placeholder="Rincikan kendala, alat rusak, atau sparepart yang dibutuhkan jika ada..." class="w-full text-sm border-gray-300 rounded-xl p-3 bg-gray-50 border focus:ring-2 focus:ring-[#003366] focus:bg-white transition leading-relaxed">{{ old('deskripsi_kendala') }}</textarea>
@@ -138,27 +194,24 @@
                     @enderror
                 </div>
 
-                <!-- Upload Foto Bukti & Container Preview (Wajib Diisi) -->
+                <!-- Upload Foto Bukti & Container Preview -->
                 <div>
                     <label for="foto" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Upload Foto Bukti Lapangan <span class="text-red-500">*</span></label>
                     <input type="file" id="foto" name="foto" accept="image/jpeg,image/png,image/jpg" required onchange="handleImagePreview(event)" class="w-full text-xs text-gray-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-[#003366] hover:file:bg-blue-100 cursor-pointer border border-gray-300 rounded-xl bg-gray-50">
                     <p class="text-[11px] text-gray-400 mt-1">Format: JPG, JPEG, PNG (Maksimal 10 MB)</p>
                     
-                    <!-- Alert Error Client-Side Foto -->
                     <p id="fotoError" class="text-red-500 text-xs mt-1 hidden"></p>
 
-                    <!-- Preview Container -->
                     <div id="previewContainer" class="mt-3 hidden">
                         <span class="block text-xs font-semibold text-gray-600 mb-2">Preview Foto yang Dipilih:</span>
                         <div class="relative inline-block bg-gray-50 p-2 rounded-xl border border-gray-200">
                             <img id="imagePreview" src="#" alt="Preview Foto" class="max-h-56 w-auto rounded-lg shadow-sm object-cover">
-                            <!-- Tombol Hapus Preview -->
                             <button type="button" onclick="removeImagePreview()" class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shadow hover:bg-red-700 transition" title="Hapus foto">&times;</button>
                         </div>
                     </div>
                     
                     @error('foto')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        <p class="text-red-500 text-xs mt-1">{{$message}}</p>
                     @enderror
                 </div>
 
@@ -171,6 +224,34 @@
             </form>
         </div>
     </div>
+
+    <!-- Script JavaScript untuk Animasi Sidebar Overlay -->
+    <script>
+        const menuBtn = document.getElementById('menu-btn');
+        const closeBtn = document.getElementById('close-btn');
+        const mobileSidebar = document.getElementById('mobile-sidebar');
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+        function openSidebar() {
+            mobileSidebar.classList.remove('-translate-x-full');
+            sidebarOverlay.classList.remove('hidden');
+            setTimeout(() => sidebarOverlay.classList.remove('opacity-0'), 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSidebar() {
+            mobileSidebar.classList.add('-translate-x-full');
+            sidebarOverlay.classList.add('opacity-0');
+            setTimeout(() => {
+                sidebarOverlay.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        if(menuBtn) menuBtn.addEventListener('click', openSidebar);
+        if(closeBtn) closeBtn.addEventListener('click', closeSidebar);
+        if(sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
+    </script>
 
     <!-- Script Preview & Validasi JavaScript -->
     <script src="{{ asset('js/teknisi-preview.js') }}"></script>
