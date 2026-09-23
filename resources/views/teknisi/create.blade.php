@@ -119,29 +119,29 @@
                 <!-- Status Pekerjaan -->
                 <div>
                     <label for="status" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Status Hasil Pekerjaan <span class="text-red-500">*</span></label>
-                    <select id="status" name="status" required onchange="toggleKendalaField()" class="w-full text-sm border-gray-300 rounded-xl p-3 bg-gray-50 border focus:ring-2 focus:ring-[#003366] focus:bg-white transition">
+                    <select id="status" name="status" required class="w-full text-sm border-gray-300 rounded-xl p-3 bg-gray-50 border focus:ring-2 focus:ring-[#003366] focus:bg-white transition">
                         <option value="" disabled selected>-- Pilih Status --</option>
-                        <option value="Selesai" {{ old('status') == 'Selesai' ? 'selected' : '' }}>Normal / Berhasil</option>
-                        <option value="Ada Kendala" {{ old('status') == 'Ada Kendala' ? 'selected' : '' }}>Ada Kendala</option>
+                        <option value="Selesai" {{ old('status') == 'Selesai' ? 'selected' : '' }}>Berjalan dengan Normal</option>
+                        <option value="Ada Kendala" {{ old('status') == 'Ada Kendala' ? 'selected' : '' }}>Terjadi Kendala</option>
                     </select>
                     @error('status')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
                 </div>
 
-                <!-- Deskripsi Kendala (Muncul Otomatis saat Status "Ada Kendala") -->
-                <div id="kendalaContainer" class="hidden">
-                    <label for="deskripsi_kendala" class="block text-xs font-bold text-red-700 uppercase tracking-wider mb-2">Deskripsi Kendala yang Dihadapi <span class="text-red-500">*</span></label>
-                    <textarea id="deskripsi_kendala" name="deskripsi_kendala" rows="3" placeholder="Rincikan kendala, alat rusak, atau sparepart yang dibutuhkan..." class="w-full text-sm border-red-200 rounded-xl p-3 bg-red-50/50 border focus:ring-2 focus:ring-red-500 focus:bg-white transition leading-relaxed">{{ old('deskripsi_kendala') }}</textarea>
+                <!-- Deskripsi Kendala (Selalu Muncul Permanen) -->
+                <div>
+                    <label for="deskripsi_kendala" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Deskripsi Kendala yang Dihadapi (Opsional)</label>
+                    <textarea id="deskripsi_kendala" name="deskripsi_kendala" rows="3" placeholder="Rincikan kendala, alat rusak, atau sparepart yang dibutuhkan jika ada..." class="w-full text-sm border-gray-300 rounded-xl p-3 bg-gray-50 border focus:ring-2 focus:ring-[#003366] focus:bg-white transition leading-relaxed">{{ old('deskripsi_kendala') }}</textarea>
                     @error('deskripsi_kendala')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
                 </div>
 
-                <!-- Upload Foto Bukti & Container Preview -->
+                <!-- Upload Foto Bukti & Container Preview (Wajib Diisi) -->
                 <div>
-                    <label for="foto" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Upload Foto Bukti Lapangan (Opsional)</label>
-                    <input type="file" id="foto" name="foto" accept="image/jpeg,image/png,image/jpg" onchange="handleImagePreview(event)" class="w-full text-xs text-gray-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-[#003366] hover:file:bg-blue-100 cursor-pointer border border-gray-300 rounded-xl bg-gray-50">
+                    <label for="foto" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Upload Foto Bukti Lapangan <span class="text-red-500">*</span></label>
+                    <input type="file" id="foto" name="foto" accept="image/jpeg,image/png,image/jpg" required onchange="handleImagePreview(event)" class="w-full text-xs text-gray-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-[#003366] hover:file:bg-blue-100 cursor-pointer border border-gray-300 rounded-xl bg-gray-50">
                     <p class="text-[11px] text-gray-400 mt-1">Format: JPG, JPEG, PNG (Maksimal 10 MB)</p>
                     
                     <!-- Alert Error Client-Side Foto -->
@@ -174,24 +174,6 @@
 
     <!-- Script Preview & Validasi JavaScript -->
     <script>
-        function toggleKendalaField() {
-            const statusSelect = document.getElementById('status');
-            const kendalaContainer = document.getElementById('kendalaContainer');
-            const kendalaInput = document.getElementById('deskripsi_kendala');
-
-            if (statusSelect.value === 'Ada Kendala') {
-                kendalaContainer.classList.remove('hidden');
-                kendalaInput.setAttribute('required', 'required');
-            } else {
-                kendalaContainer.classList.add('hidden');
-                kendalaInput.removeAttribute('required');
-                kendalaInput.value = '';
-            }
-        }
-
-        // Cek status saat halaman dimuat (agar mendukung re-select dari nilai old)
-        document.addEventListener('DOMContentLoaded', toggleKendalaField);
-
         function handleImagePreview(event) {
             const fileInput = event.target;
             const file = fileInput.files[0];

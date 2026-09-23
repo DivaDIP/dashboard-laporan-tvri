@@ -28,7 +28,7 @@
                 <th width="13%">Nama Teknisi</th>
                 <th width="12%">Tugas</th>
                 <th width="8%">Lokasi</th>
-                <th width="14%">Isi Kegiatan</th>
+                <th width="14%">Kegiatan</th>
                 <th width="10%">Detail Kendala</th>
                 <th width="8%" class="text-center">Status</th>
                 <th width="8%" class="text-center">Foto</th>
@@ -88,11 +88,11 @@
                     <!-- KOLOM: BADGE STATUS LAPORAN -->
                     <td class="text-center">
                         @if($report->status == 'Selesai')
-                            <span class="status-badge status-selesai">Normal</span>
+                            <span class="status-badge status-selesai">Berjalan Normal</span>
                         @elseif($report->status == 'Dalam Proses')
                             {{-- <span class="status-badge status-proses">Proses</span> --}}
                         @else
-                            <span class="status-badge status-kendala">Kendala</span>
+                            <span class="status-badge status-kendala">Terjadi Kendala</span>
                         @endif
                     </td>
 

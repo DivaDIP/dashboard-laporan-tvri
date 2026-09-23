@@ -261,14 +261,14 @@
                 </div>
 
                 <div>
-                    <span class="block text-xs text-gray-400 font-medium mb-1.5">Tugas / Kegiatan Dikerjakan</span>
+                    <span class="block text-xs text-gray-400 font-medium mb-1.5">Kegiatan</span>
                     <div id="modal_isi" class="text-xs text-gray-700 bg-gray-50 p-4 rounded-xl border border-gray-100 leading-relaxed whitespace-pre-line min-h-[80px]"></div>
                 </div>
 
                 <!-- SUB-SECTION MODAL: DESKRIPSI KENDALA -->
                 <div id="modal_kendala_container" class="hidden">
-                    <span class="block text-xs font-bold text-red-600 mb-1.5 flex items-center gap-1">
-                        ⚠️ Detail Kendala Lapangan
+                    <span class="block text-xs text-gray-400 font-medium mb-1.5">
+                        Detail Kendala Lapangan
                     </span>
                     <div id="modal_kendala" class="text-xs text-red-700 bg-red-50 p-4 rounded-xl border border-red-200 leading-relaxed whitespace-pre-line min-h-[60px]"></div>
                 </div>
