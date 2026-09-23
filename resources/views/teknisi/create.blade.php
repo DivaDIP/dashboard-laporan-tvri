@@ -14,7 +14,7 @@
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             
             <!-- Logo / Judul Kiri -->
-            <span class="font-bold text-sm sm:text-base md:text-lg tracking-wide truncate">Laporan Staff Penyiaran</span>
+            <span class="font-bold text-sm sm:text-base md:text-lg tracking-wide truncate">Laporan Staff Penyiaran & Produksi</span>
             
             <!-- Tombol Hamburger (Hanya tampil di Mobile) -->
             <button id="menu-btn" class="md:hidden text-white focus:outline-none p-1">
@@ -224,34 +224,6 @@
             </form>
         </div>
     </div>
-
-    <!-- Script JavaScript untuk Animasi Sidebar Overlay -->
-    <script>
-        const menuBtn = document.getElementById('menu-btn');
-        const closeBtn = document.getElementById('close-btn');
-        const mobileSidebar = document.getElementById('mobile-sidebar');
-        const sidebarOverlay = document.getElementById('sidebar-overlay');
-
-        function openSidebar() {
-            mobileSidebar.classList.remove('-translate-x-full');
-            sidebarOverlay.classList.remove('hidden');
-            setTimeout(() => sidebarOverlay.classList.remove('opacity-0'), 10);
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeSidebar() {
-            mobileSidebar.classList.add('-translate-x-full');
-            sidebarOverlay.classList.add('opacity-0');
-            setTimeout(() => {
-                sidebarOverlay.classList.add('hidden');
-                document.body.style.overflow = '';
-            }, 300);
-        }
-
-        if(menuBtn) menuBtn.addEventListener('click', openSidebar);
-        if(closeBtn) closeBtn.addEventListener('click', closeSidebar);
-        if(sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
-    </script>
 
     <!-- Script Preview & Validasi JavaScript -->
     <script src="{{ asset('js/teknisi-preview.js') }}"></script>
