@@ -112,9 +112,8 @@
                     <label for="status" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Status Hasil Pekerjaan <span class="text-red-500">*</span></label>
                     <select id="status" name="status" required onchange="toggleKendalaField()" class="w-full text-sm border-gray-300 rounded-xl p-3 bg-gray-50 border focus:ring-2 focus:ring-[#003366] focus:bg-white transition">
                         <option value="" disabled selected>-- Pilih Status --</option>
-                        <option value="Selesai" {{ old('status') == 'Selesai' ? 'selected' : '' }}>Selesai (Normal / Berhasil)</option>
-                        <option value="Dalam Proses" {{ old('status') == 'Dalam Proses' ? 'selected' : '' }}>Dalam Proses (Pengerjaan Lanjutan)</option>
-                        <option value="Ada Kendala" {{ old('status') == 'Ada Kendala' ? 'selected' : '' }}>Ada Kendala (Butuh Tindak Lanjut / Sparepart)</option>
+                        <option value="Selesai" {{ old('status') == 'Selesai' ? 'selected' : '' }}>Normal / Berhasil</option>
+                        <option value="Ada Kendala" {{ old('status') == 'Ada Kendala' ? 'selected' : '' }}>Ada Kendala</option>
                     </select>
                     @error('status')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -134,7 +133,7 @@
                 <div>
                     <label for="foto" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Upload Foto Bukti Lapangan (Opsional)</label>
                     <input type="file" id="foto" name="foto" accept="image/jpeg,image/png,image/jpg" onchange="handleImagePreview(event)" class="w-full text-xs text-gray-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-[#003366] hover:file:bg-blue-100 cursor-pointer border border-gray-300 rounded-xl bg-gray-50">
-                    <p class="text-[11px] text-gray-400 mt-1">Format: JPG, JPEG, PNG (Maksimal 2 MB)</p>
+                    <p class="text-[11px] text-gray-400 mt-1">Format: JPG, JPEG, PNG (Maksimal 10 MB)</p>
                     
                     <!-- Alert Error Client-Side Foto -->
                     <p id="fotoError" class="text-red-500 text-xs mt-1 hidden"></p>
@@ -205,10 +204,10 @@
                     return;
                 }
 
-                // Validasi Ukuran File Client-side (Maks 2MB = 2 * 1024 * 1024 bytes)
-                const maxSize = 2 * 1024 * 1024;
+                // Validasi Ukuran File Client-side (Maks 10MB = 10 * 1024 * 1024 bytes)
+                const maxSize = 10 * 1024 * 1024;
                 if (file.size > maxSize) {
-                    errorElement.innerText = 'Ukuran file terlalu besar! Maksimal ukuran foto adalah 2 MB.';
+                    errorElement.innerText = 'Ukuran file terlalu besar! Maksimal ukuran foto adalah 10 MB.';
                     errorElement.classList.remove('hidden');
                     removeImagePreview();
                     return;

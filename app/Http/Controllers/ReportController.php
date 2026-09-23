@@ -44,7 +44,7 @@ class ReportController extends Controller
             'isi_laporan'       => 'required|string',
             'status'            => 'required|string',
             'deskripsi_kendala' => 'nullable|string',
-            'foto'              => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'foto'              => 'nullable|image|mimes:jpeg,png,jpg|max:10240',
         ]);
 
         $fotoPath = null;

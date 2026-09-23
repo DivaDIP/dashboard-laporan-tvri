@@ -12,7 +12,7 @@
     <!-- Navbar -->
 <nav class="bg-[#003366] text-white px-6 py-4 flex justify-between items-center shadow-md">
     <div class="flex items-center space-x-6">
-        <span class="font-bold text-lg tracking-wide">Staf Teknisi TVRI</span>
+        <span class="font-bold text-lg tracking-wide">Laporan Staff Penyiaran & Produksi</span>
         <div class="space-x-4 text-sm font-medium">
             <a href="{{ route('dashboard') }}" class="text-blue-200 hover:text-white transition">Form Input</a>
             <a href="{{ route('reports.my') }}" class="text-white font-bold border-b-2 border-white pb-1">Riwayat Saya</a>
