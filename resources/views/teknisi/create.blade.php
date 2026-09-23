@@ -16,7 +16,7 @@
             <!-- Logo / Judul Kiri -->
             <span class="font-bold text-sm sm:text-base md:text-lg tracking-wide truncate">Laporan Staff Penyiaran & Produksi</span>
             
-            <!-- Tombol Hamburger (Hanya tampil di Mobile) -->
+            <!-- Tombol Hamburger -->
             <button id="menu-btn" class="md:hidden text-white focus:outline-none p-1">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -44,12 +44,12 @@
     <!-- Overlay Gelap di Belakang Sidebar -->
     <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-50 hidden transition-opacity opacity-0"></div>
 
-    <!-- Panel Sidebar Mobile (Geser dari Samping) -->
+    <!-- Panel Sidebar Mobile -->
     <div id="mobile-sidebar" class="fixed top-0 left-0 bottom-0 w-4/5 max-w-xs bg-white text-gray-900 z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col justify-between shadow-2xl">
         
         <!-- Bagian Atas Sidebar -->
         <div>
-            <!-- Header Sidebar (Tombol Close & Judul/Logo) -->
+            <!-- Header Sidebar -->
             <div class="p-5 flex justify-between items-center border-b border-gray-100">
                 <span class="font-bold text-sm text-[#003366] tracking-wide">Menu Navigasi</span>
                 <button id="close-btn" class="text-gray-500 hover:text-gray-800 text-2xl font-bold leading-none p-1 focus:outline-none">&times;</button>
@@ -62,7 +62,7 @@
             </div>
         </div>
 
-        <!-- Bagian Bawah Sidebar (Info User & Logout) -->
+        <!-- Bagian Bawah Sidebar -->
         <div class="p-5 border-t border-gray-100 bg-gray-50 space-y-4">
             <div class="flex items-center space-x-3">
                 <div class="w-9 h-9 rounded-full bg-[#003366] text-white flex items-center justify-center font-bold text-xs">
@@ -106,7 +106,7 @@
                 <!-- Input Nama Lengkap / Staf -->
                 <div>
                     <label for="nama_teknisi" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Nama Teknisi <span class="text-red-500">*</span></label>
-                    <input type="text" id="nama_teknisi" name="nama_teknisi" value="{{ old('nama_teknisi') }}" required placeholder="Contoh: Budi Santoso, S.Kom" class="w-full text-sm border-gray-300 rounded-xl p-3 bg-gray-50 border focus:ring-2 focus:ring-[#003366] focus:bg-white transition">
+                    <input type="text" id="nama_teknisi" name="nama_teknisi" value="{{ old('nama_teknisi') }}" required placeholder="Contoh: John Doe" class="w-full text-sm border-gray-300 rounded-xl p-3 bg-gray-50 border focus:ring-2 focus:ring-[#003366] focus:bg-white transition">
                     @error('nama_teknisi')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
@@ -114,7 +114,7 @@
 
                 <!-- Asal Teknisi / Bidang -->
                 <div>
-                    <label for="asal_teknisi" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Bidang / Subkelompok Teknisi <span class="text-red-500">*</span></label>
+                    <label for="asal_teknisi" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Tugas / Role<span class="text-red-500">*</span></label>
                     <select id="asal_teknisi" name="asal_teknisi" required class="w-full text-sm border-gray-300 rounded-xl p-3 bg-gray-50 border focus:ring-2 focus:ring-[#003366] focus:bg-white transition">
                         <option value="" disabled selected>-- Pilih Bidang Teknisi --</option>
                         <option value="Switcher" {{ old('asal_teknisi') == 'Switcher' ? 'selected' : '' }}>Switcher</option>
@@ -134,7 +134,7 @@
 
                 <!-- Jenis / Kategori Kegiatan -->
                 <div>
-                    <label for="kategori" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Jenis Kegiatan <span class="text-red-500">*</span></label>
+                    <label for="kategori" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Jam Kegiatan <span class="text-red-500">*</span></label>
                     <select id="kategori" name="kategori" required class="w-full text-sm border-gray-300 rounded-xl p-3 bg-gray-50 border focus:ring-2 focus:ring-[#003366] focus:bg-white transition">
                         <option value="" disabled selected>-- Pilih Waktu Kegiatan --</option>
                         <option value="Pagi" {{ old('kategori') == 'Pagi' ? 'selected' : '' }}>08:00 - 16:00</option>
